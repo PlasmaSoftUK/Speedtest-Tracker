@@ -1,0 +1,17 @@
+.git
+.github
+.cursor
+.devcontainer
+
+*.md
+LICENSE*
+README*
+
+speedtest-tracker-armv7.tar
+test.tgz
+
+node_modules
+vendor
+
+.env
+.env.*
