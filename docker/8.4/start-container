@@ -10,7 +10,6 @@ cd $APP
 # ----------------------------
 # 1. Database always from config
 # ----------------------------
-mkdir -p "$APP/database"
 touch "$CONFIG/database.sqlite"
 ln -sfn "$CONFIG/database.sqlite" "$APP/database/database.sqlite"
 

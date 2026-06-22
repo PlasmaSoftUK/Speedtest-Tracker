@@ -95,9 +95,7 @@ RUN chmod +x /usr/local/bin/start-container
 RUN composer install \
     --optimize-autoloader \
     --no-interaction \
-    --no-scripts \
- && composer show laravel/boost \
- && ls -ld vendor/laravel/boost
+    --no-scripts
 
 EXPOSE 80/tcp
 
