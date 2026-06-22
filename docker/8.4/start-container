@@ -22,7 +22,7 @@ mkdir -p /app/www/storage/framework/sessions
 mkdir -p /app/www/storage/framework/testing
 mkdir -p /app/www/storage/app/private
 mkdir -p /app/www/storage/app/public
-mkdir -p /app/www/storage/logs
+ln -sfn "$CONFIG/log" "/app/www/storage/logs"
 chmod -R 775 /app/www/storage
 
 chown -R sail:sail $CONFIG || true
