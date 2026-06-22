@@ -84,11 +84,6 @@ COPY docker/8.4/php.ini /etc/php/8.4/cli/conf.d/99-sail.ini
 
 COPY . /app/www
 
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction
-
 RUN chown -R sail:sail /app/www
 
 RUN find /app/www -type d -exec chmod 755 {} \; && \
@@ -97,7 +92,12 @@ RUN find /app/www -type d -exec chmod 755 {} \; && \
 RUN chmod +x /app/www/artisan || true
 RUN chmod +x /usr/local/bin/start-container
 
-RUN mkdir -p /config/storage /config/logs /config/cache
+RUN composer install \
+    --optimize-autoloader \
+    --no-interaction \
+    --no-scripts \
+ && composer show laravel/boost \
+ && ls -ld vendor/laravel/boost
 
 EXPOSE 80/tcp
 

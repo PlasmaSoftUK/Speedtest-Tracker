@@ -8,53 +8,35 @@ CONFIG="/config"
 cd $APP
 
 # ----------------------------
-# 1. Ensure config structure
-# ----------------------------
-mkdir -p "$CONFIG/storage/app"
-mkdir -p "$CONFIG/storage/framework/cache"
-mkdir -p "$CONFIG/storage/framework/sessions"
-mkdir -p "$CONFIG/storage/framework/testing"
-mkdir -p "$CONFIG/storage/framework/views"
-mkdir -p "$CONFIG/storage/logs"
-mkdir -p /var/log/supervisor
-
-# ----------------------------
-# 2. Move .env into config (if not already there)
-# ----------------------------
-if [ ! -f "$CONFIG/.env" ] && [ -f "$APP/.env" ]; then
-    cp "$APP/.env" "$CONFIG/.env"
-fi
-
-ln -sf "$CONFIG/.env" "$APP/.env"
-
-# ----------------------------
-# 3. Database always from config
+# 1. Database always from config
 # ----------------------------
 mkdir -p "$APP/database"
 touch "$CONFIG/database.sqlite"
 ln -sfn "$CONFIG/database.sqlite" "$APP/database/database.sqlite"
 
 # ----------------------------
-# 4. Laravel runtime dirs → config
+# 2. Fix Storage & Permissions
 # ----------------------------
-rm -rf "$APP/storage"
-ln -sfn "$CONFIG/storage" "$APP/storage"
+mkdir -p /app/www/storage/framework/views
+mkdir -p /app/www/storage/framework/cache/data
+mkdir -p /app/www/storage/framework/sessions
+mkdir -p /app/www/storage/framework/testing
+mkdir -p /app/www/storage/app/private
+mkdir -p /app/www/storage/app/public
+mkdir -p /app/www/storage/logs
+chmod -R 775 /app/www/storage
 
-
-# ----------------------------
-# 5. Permissions
-# ----------------------------
 chown -R sail:sail $CONFIG || true
 chown -R sail:sail $APP || true
 
 gosu sail php artisan config:clear || true
 
 # ----------------------------
-# 6. Migrate safely
+# 3. Migrate safely
 # ----------------------------
 gosu sail php artisan migrate --force || true
 
 # ----------------------------
-# 7. Start
+# 4. Start
 # ----------------------------
 exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
