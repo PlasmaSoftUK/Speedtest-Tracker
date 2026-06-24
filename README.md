@@ -1,5 +1,8 @@
 # 🐇 Speedtest Tracker
 
+FORK INFO - Forked to make changes to Docker Build files for running Speedtest Tracker on arm7 / armhf like QNAP NAS TS-431XeU with an Annapurna ARM processor like the AL314. See QNAP Docker Build text file.
+
+
 Speedtest Tracker is a self-hosted application that monitors the performance and uptime of your internet connection.
 
 ![Dashboard](.github/screenshots/dashboard.png)
